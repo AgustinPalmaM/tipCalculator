@@ -82,12 +82,62 @@ function showItems(responseAPI) {
     categoryRow.classList.add('col-md-3');
     categoryRow.textContent = categories[category];
 
+    const quantityInput = document.createElement('INPUT');
+    quantityInput.type = 'number';
+    quantityInput.min = 0;
+    quantityInput.value = 0;
+    quantityInput.id = `item-${id}`
+    quantityInput.classList.add('form-control');
+    
+    quantityInput.onchange = () => {
+
+      const qty = parseInt(quantityInput.value);
+      addItem( {...item, qty } );
+    };
+
+
+    const addInputToRow = document.createElement('DIV');
+    addInputToRow.classList.add('col-md-2');
+    addInputToRow.appendChild(quantityInput);
+
     row.appendChild(nameRow);
     row.appendChild(priceRow);
     row.appendChild(categoryRow);
+    row.appendChild(addInputToRow);
     
     containerItems.appendChild(row);
     
   })
 }
 
+function addItem(item) {
+
+  let { order } = customer;
+  
+  if( item.qty > 0 ) {
+    if(order.some( product => product.id === item.id )) {
+      const updatedOrder = order.map( food => {
+        if(food.id === item.id) {
+          food.qty = item.qty;
+        }
+
+        
+        return food;
+      })
+
+      customer.order = [...updatedOrder];
+
+    } else {
+
+      customer.order = [...order, item]
+    }
+  } else {
+
+    const result = order.filter( food => food.id !==  item.id )
+    customer.order = [...result]
+    
+  }
+
+  console.log(customer.order);
+
+}

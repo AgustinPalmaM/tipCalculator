@@ -10,6 +10,8 @@ const categories = {
   3: "Desserts"
 }
 
+const content = document.querySelector('#resumen .contenido');
+
 const buttonSaveCustomer = document.querySelector("#guardar-cliente");
 buttonSaveCustomer.addEventListener("click", saveCustomer);
 
@@ -139,15 +141,19 @@ function addItem(item) {
   }
 
   
-  updateSummary();
+  
+  if (customer.order.length) {
+    updateSummary();
+  } else {
+    messageEmptyOrder();
+  }
   
 }
 
 function updateSummary() {
 
-  
-  const content = document.querySelector('#resumen .contenido');
   cleanHTML(content);
+
 
   const summary = document.createElement('DIV');
   summary.classList.add('col-md-6', 'card', 'py-5', 'px-3', 'shadow');
@@ -175,9 +181,71 @@ function updateSummary() {
   heading.textContent = 'Dishes consumed: ';
   heading.classList.add('my-4', 'text-center')
 
+  const group = document.createElement('UL');
+  group.classList.add('list-group');
+
+  const { order } = customer;
+  order.forEach( item => {
+    const { name, qty, price, id } = item;
+
+    const list  = document.createElement('LI');
+    list.classList.add('list-group-item');
+
+    const itemName = document.createElement('H4');
+    itemName.classList.add('my-4');
+    itemName.textContent = name;
+
+    const itemQuantity = document.createElement('P');
+    itemQuantity.classList.add('fw-bold');
+    itemQuantity.textContent = 'Quantity: ';
+
+    const itemQuantitySpan = document.createElement('SPAN');
+    itemQuantitySpan.classList.add('fw-normal');
+    itemQuantitySpan.textContent = qty;
+
+    itemQuantity.appendChild(itemQuantitySpan);
+    
+    const itemPrice = document.createElement('P');
+    itemPrice.classList.add('fw-bold');
+    itemPrice.textContent = 'Unit Price: ';
+    
+    const itemPriceSpan = document.createElement('SPAN');
+    itemPriceSpan.classList.add('fw-normal');
+    itemPriceSpan.textContent = `$ ${price}`;
+
+    itemPrice.appendChild(itemPriceSpan);
+
+    const itemSubtotal = document.createElement('P');
+    itemSubtotal.classList.add('fw-bold');
+    itemSubtotal.textContent = 'Subtotal: ';
+    
+    const itemSubtotalSpan = document.createElement('SPAN');
+    itemSubtotalSpan.classList.add('fw-normal');
+    itemSubtotalSpan.textContent = calculateSubtotal(price, qty);
+
+    itemSubtotal.appendChild(itemSubtotalSpan);
+
+    const deleteBtn = document.createElement('BUTTON');
+    deleteBtn.classList.add('btn', 'btn-danger');
+    deleteBtn.textContent = 'Delete item';
+    deleteBtn.onclick = () => {
+      deleteItem(id);
+    }
+
+    list.appendChild(itemName);
+    list.appendChild(itemQuantity);
+    list.appendChild(itemPrice);
+    list.appendChild(itemSubtotal);
+    list.appendChild(deleteBtn);
+
+    group.appendChild(list);
+
+  })
+
   summary.appendChild(table);
   summary.appendChild(hour);
   summary.appendChild(heading);
+  summary.appendChild(group);
   
   content.appendChild(summary);
 
@@ -188,4 +256,35 @@ function cleanHTML(target) {
   while( target.firstElementChild ) {
     target.firstElementChild.remove()
   }
+}
+
+function calculateSubtotal(price, quantity) {
+  return `$ ${price * quantity}`
+}
+
+function deleteItem(id) {
+  const { order } = customer;
+  const updatedOrder = order.filter( item => item.id !== id );
+  customer.order = [...updatedOrder];
+
+  updateSummary();
+  updateInput(id);
+ 
+  if (customer.order.length === 0) {
+    cleanHTML(content);
+    messageEmptyOrder();
+  }
+}
+
+function updateInput(id) {
+  const inputTarget = document.querySelector(`#item-${id}`);
+  inputTarget.value = 0;
+}
+
+function messageEmptyOrder() {
+  const welcomeParagraph = document.createElement('P');
+  welcomeParagraph.textContent = 'Añade los elementos del pedido';
+  welcomeParagraph.classList.add('text-center')
+  const container = document.querySelector('.contenido.row')
+  container.appendChild(welcomeParagraph);
 }

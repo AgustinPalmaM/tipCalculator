@@ -2,37 +2,37 @@
   "items": [
     {
       "id": 1,
-      "name": "Pizza a la Leña Chica",
+      "name": "Small Pizza",
       "price": 30,
       "category": 1
     },
     {
       "id": 2,
-      "name": "Pizza a la Leña Mediana",
+      "name": "Medium Pizza",
       "price": 50,
       "category": 1
     },
     {
       "id": 3,
-      "name": "Rebanada de Pay de Limón",
+      "name": "Lemon pie slice",
       "price": 30,
       "category": 3
     },
     {
       "id": 4,
-      "name": "Rebanada de Pastel de Chocolate",
+      "name": "Chocolate cake slice",
       "price": 30,
       "category": 3
     },
     {
       "id": 5,
-      "name": "Jugo de Naranja",
+      "name": "Orange Juice",
       "price": 15,
       "category": 2
     },
     {
       "id": 6,
-      "name": "Pizza a la Leña Grande",
+      "name": "Large pizza",
       "price": 70,
       "category": 1
     },
@@ -44,7 +44,7 @@
     },
     {
       "id": 8,
-      "name": "Jugo de Naranja",
+      "name": "Apple juice",
       "price": 15,
       "category": 2
     },
@@ -56,19 +56,19 @@
     },
     {
       "id": 10,
-      "name": "Rebanada de Pay de Queso",
+      "name": "Cheese cake slice",
       "price": 30,
       "category": 3
     },
     {
       "id": 11,
-      "name": "Café Americano",
+      "name": "American coffee",
       "price": 20,
       "category": 2
     },
     {
       "id": 12,
-      "name": "Café Capuchino",
+      "name": "Capuccino coffee",
       "price": 40,
       "category": 2
     }

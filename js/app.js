@@ -138,6 +138,54 @@ function addItem(item) {
     
   }
 
-  console.log(customer.order);
+  
+  updateSummary();
+  
+}
 
+function updateSummary() {
+
+  
+  const content = document.querySelector('#resumen .contenido');
+  cleanHTML(content);
+
+  const summary = document.createElement('DIV');
+  summary.classList.add('col-md-6', 'card', 'py-5', 'px-3', 'shadow');
+
+  const table = document.createElement('P');
+  table.textContent = 'Table: ';
+  table.classList.add('fw-bold');
+
+  const tableSpan = document.createElement('SPAN');
+  tableSpan.textContent = customer.table;
+  tableSpan.classList.add('fw-normal');
+
+  const hour = document.createElement('P');
+  hour.textContent = 'Hour: ';
+  hour.classList.add('fw-bold');
+
+  const hourSpan = document.createElement('SPAN');
+  hourSpan.textContent = customer.hour;
+  hourSpan.classList.add('fw-normal');
+
+  table.appendChild(tableSpan);
+  hour.appendChild(hourSpan);
+
+  const heading = document.createElement('H3');
+  heading.textContent = 'Dishes consumed: ';
+  heading.classList.add('my-4', 'text-center')
+
+  summary.appendChild(table);
+  summary.appendChild(hour);
+  summary.appendChild(heading);
+  
+  content.appendChild(summary);
+
+
+}
+
+function cleanHTML(target) {
+  while( target.firstElementChild ) {
+    target.firstElementChild.remove()
+  }
 }

@@ -8,3 +8,9 @@ The database comes from a json file with all the information items as name, pric
 Using fetch we get the data and manipulate it to display it into the html.
 
 You can check a live demo here: https://lustrous-monstera-f3493a.netlify.app/
+
+![](images/modal.png)
+
+![](images/items.png)
+
+![](images/summary.png)
